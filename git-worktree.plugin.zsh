@@ -34,7 +34,7 @@ wt() {
     fi
 
     # Define the parent folder where all worktrees go
-    local worktree_parent="/Users/zaher/Developer/worktrees/${project_name}"
+    local worktree_parent="${GIT_WORKTREE_PATH:-/Users/zaher/Developer/worktrees}/${project_name}"
 
     # Define the full path of the new worktree folder
     local worktree_path="${worktree_parent}/${feature_name}"
@@ -64,12 +64,23 @@ wt() {
     # cd into the new worktree
     cd "$worktree_path"
 
-    # Open the worktree in Cursor (if available)
-    if command -v cursor >/dev/null 2>&1; then
+    # Open the worktree in preferred editor
+    local editor="${GIT_WORKTREE_EDITOR:-cursor}"
+    
+    if [[ "$editor" == "code" ]] && command -v code >/dev/null 2>&1; then
+        code "$worktree_path" &
+        echo "🚀 Opened in VS Code"
+    elif [[ "$editor" == "cursor" ]] && command -v cursor >/dev/null 2>&1; then
         cursor "$worktree_path" &
         echo "🚀 Opened in Cursor"
+    elif command -v cursor >/dev/null 2>&1; then
+        cursor "$worktree_path" &
+        echo "🚀 Opened in Cursor (fallback)"
+    elif command -v code >/dev/null 2>&1; then
+        code "$worktree_path" &
+        echo "🚀 Opened in VS Code (fallback)"
     else
-        echo "💡 Cursor not found. You can open the worktree manually at: $worktree_path"
+        echo "💡 No supported editor found. You can open the worktree manually at: $worktree_path"
     fi
 
     # Confirm success
@@ -122,7 +133,8 @@ wt-switch() {
     fi
     
     local project_name=$(basename "$project_dir")
-    local worktree_path="/Users/zaher/Developer/worktrees/${project_name}/${worktree_name}"
+    local worktree_parent="${GIT_WORKTREE_PATH:-/Users/zaher/Developer/worktrees}/${project_name}"
+    local worktree_path="${worktree_parent}/${worktree_name}"
     
     if [[ -d "$worktree_path" ]]; then
         cd "$worktree_path"

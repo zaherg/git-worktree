@@ -8,7 +8,7 @@ A powerful Oh My Zsh plugin that simplifies Git worktree management, allowing yo
 - **Automatic file copying** of untracked development files (`.env`, `.vscode`, `.cursor`, etc.)
 - **Organized structure** with centralized worktree management
 - **Multiple utility commands** for complete worktree lifecycle management
-- **Smart editor integration** with automatic Cursor opening
+- **Smart editor integration** with configurable editor support (Cursor/VS Code)
 - **Convenient aliases** for faster workflow
 
 ## 🚀 Installation
@@ -143,38 +143,45 @@ wt-remove /Users/zaher/Developer/worktrees/myapp/hotfix/critical-bug
 
 ## ⚙️ Configuration
 
-### Custom Worktree Directory
+### Environment Variables
 
-By default, worktrees are created in `/Users/zaher/Developer/worktrees/`. To change this, edit the plugin file:
+The plugin supports the following environment variables for easy configuration:
+
+#### `GIT_WORKTREE_PATH`
+Set a custom directory for worktrees (default: `/Users/zaher/Developer/worktrees`):
 
 ```bash
-# Edit the plugin file
-vim ~/.oh-my-zsh/custom/plugins/git-worktree/git-worktree.plugin.zsh
+# Add to your ~/.zshrc
+export GIT_WORKTREE_PATH="/your/custom/worktrees/path"
+```
 
-# Change this line:
-local worktree_parent="/Users/zaher/Developer/worktrees/${project_name}"
-# To your preferred path:
-local worktree_parent="/your/custom/path/${project_name}"
+#### `GIT_WORKTREE_EDITOR`
+Choose your preferred editor (`cursor` or `code`, default: `cursor`):
+
+```bash
+# Add to your ~/.zshrc
+export GIT_WORKTREE_EDITOR="code"    # Use VS Code
+export GIT_WORKTREE_EDITOR="cursor"  # Use Cursor (default)
 ```
 
 ### Editor Integration
 
-The plugin automatically opens new worktrees in Cursor if available. To use a different editor, modify the editor section in the plugin:
+The plugin automatically opens new worktrees in your preferred editor with intelligent fallbacks:
+
+1. **Preferred editor**: Uses `GIT_WORKTREE_EDITOR` if set and available
+2. **Cursor fallback**: Falls back to Cursor if available
+3. **VS Code fallback**: Falls back to VS Code if Cursor unavailable
+4. **Manual open**: Shows path for manual opening if no editor found
+
+### Configuration Examples
 
 ```bash
-# Replace this section:
-if command -v cursor >/dev/null 2>&1; then
-    cursor "$worktree_path" &
-    echo "🚀 Opened in Cursor"
-else
-    echo "💡 Cursor not found. You can open the worktree manually at: $worktree_path"
-fi
+# Example ~/.zshrc configuration
+export GIT_WORKTREE_PATH="/Users/$(whoami)/workspace/worktrees"
+export GIT_WORKTREE_EDITOR="code"
 
-# With your preferred editor:
-if command -v code >/dev/null 2>&1; then
-    code "$worktree_path" &
-    echo "🚀 Opened in VS Code"
-fi
+# Reload your shell
+source ~/.zshrc
 ```
 
 ## 🎨 Aliases
@@ -218,6 +225,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - The Git community for developing the worktree feature
 
 ## 📝 Changelog
+
+### v1.1.0
+- Added environment variable support for custom worktree paths (`GIT_WORKTREE_PATH`)
+- Added environment variable support for editor selection (`GIT_WORKTREE_EDITOR`)
+- Enhanced editor integration with intelligent fallbacks (Cursor → VS Code)
+- Improved configuration flexibility
 
 ### v1.0.0
 - Initial release
