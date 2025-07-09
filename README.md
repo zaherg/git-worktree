@@ -23,7 +23,7 @@ A powerful Oh My Zsh plugin that simplifies Git worktree management, allowing yo
 2. **Download the plugin:**
    ```bash
    curl -o ~/.oh-my-zsh/custom/plugins/git-worktree/git-worktree.plugin.zsh \
-   https://raw.githubusercontent.com/your-repo/git-worktree-plugin/main/git-worktree.plugin.zsh
+   https://raw.githubusercontent.com/zaherg/git-worktree/main/git-worktree.plugin.zsh
    ```
 
 3. **Enable the plugin in your `~/.zshrc`:**
@@ -39,7 +39,7 @@ A powerful Oh My Zsh plugin that simplifies Git worktree management, allowing yo
 ### Method 2: Clone Repository
 
 ```bash
-git clone https://github.com/your-repo/git-worktree-plugin.git ~/.oh-my-zsh/custom/plugins/git-worktree
+git clone https://github.com/zaherg/git-worktree.git ~/.oh-my-zsh/custom/plugins/git-worktree
 ```
 
 Then follow steps 3-4 from Method 1.
@@ -58,7 +58,7 @@ Then follow steps 3-4 from Method 1.
 Create a new worktree with a new branch:
 ```bash
 wt feature/user-authentication
-wt bugfix/login-error  
+wt bugfix/login-error
 wt hotfix/security-patch
 ```
 
@@ -229,4 +229,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Made with ❤️ for developers who love Git worktrees**
+**Made with ❤️ for developers who love Git worktrees and with Claude 🤖 **
