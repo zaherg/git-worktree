@@ -1,3 +1,6 @@
+> [!note]
+> I found a better solution, just go and use [https://worktrunk.dev/worktrunk/](https://worktrunk.dev/worktrunk/)
+
 # Git Worktree Oh My Zsh Plugin
 
 A powerful Oh My Zsh plugin that simplifies Git worktree management, allowing you to work on multiple branches simultaneously without the hassle of stashing or switching contexts.
